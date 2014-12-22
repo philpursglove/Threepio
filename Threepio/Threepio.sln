@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Threepio", "Threepio\Threepio.csproj", "{24B28563-6959-4B79-B6B4-657413699B4E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Threepio.Tests", "Threepio.Tests\Threepio.Tests.csproj", "{E1FF293C-0B6B-44B6-B183-61E0EDE25B1F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{24B28563-6959-4B79-B6B4-657413699B4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24B28563-6959-4B79-B6B4-657413699B4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24B28563-6959-4B79-B6B4-657413699B4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1FF293C-0B6B-44B6-B183-61E0EDE25B1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1FF293C-0B6B-44B6-B183-61E0EDE25B1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1FF293C-0B6B-44B6-B183-61E0EDE25B1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1FF293C-0B6B-44B6-B183-61E0EDE25B1F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
