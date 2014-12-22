@@ -15,7 +15,7 @@ namespace Threepio
         public static Film Get(int id)
         {
             WebClient client = new WebClient();
-            String data = client.DownloadString(string.Format("http://swapi.co/api/films/{0}/", id));
+            String data = client.DownloadString(string.Format("{0}/films/{1}/", Settings.RootUrl, id));
             TextReader textreader = new StringReader(data);
             JsonReader reader = new JsonTextReader(textreader);
             return JsonSerializer.Create().Deserialize<Film>(reader);
