@@ -25,21 +25,31 @@ namespace Threepio
 
         public static Film Get(int id)
         {
-            try
+            string data;
+            using (WebClient client = new WebClient())
             {
-                string data;
-                using (WebClient client = new WebClient())
-                {
-                    data = client.DownloadString(string.Format("{0}/films/{1}/", Settings.RootUrl, id));
-                }
-                TextReader textreader = new StringReader(data);
-                JsonReader reader = new JsonTextReader(textreader);
-                return JsonSerializer.Create().Deserialize<Film>(reader);
+                client.Headers.Add(HttpRequestHeader.UserAgent, "Threepio .Net library");
+                data = client.DownloadString(string.Format("{0}/films/{1}/", Settings.RootUrl, id));
             }
-            catch (Exception)
+            TextReader textreader = new StringReader(data);
+            JsonReader reader = new JsonTextReader(textreader);
+            return JsonSerializer.Create().Deserialize<Film>(reader);
+        }
+
+        public static List<Film> GetAll(int pageSize = 6, int pageNumber = 1)
+        {
+            string data;
+            using (WebClient client = new WebClient())
             {
-                return null;
+                client.Headers.Add(HttpRequestHeader.UserAgent, "Threepio .Net library");
+                data = client.DownloadString(string.Format("{0}/films/", Settings.RootUrl));
             }
+
+            // Paging algorthim
+            int startRecord = ((pageNumber - 1) * pageSize) + 1;
+            int endRecord = pageNumber * pageSize;
+
+            return new List<Film>();
         }
     }
 }

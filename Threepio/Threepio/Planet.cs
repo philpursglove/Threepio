@@ -24,21 +24,15 @@ namespace Threepio
 
         public static Planet Get(int id)
         {
-            try
+            string data;
+            using (WebClient client = new WebClient())
             {
-                string data;
-                using (WebClient client = new WebClient())
-                {
-                    data = client.DownloadString(string.Format("{0}/planets/{1}/", Settings.RootUrl, id));
-                }
-                TextReader textreader = new StringReader(data);
-                JsonReader reader = new JsonTextReader(textreader);
-                return JsonSerializer.Create().Deserialize<Planet>(reader);
+                client.Headers.Add(HttpRequestHeader.UserAgent, "Threepio .Net library");
+                data = client.DownloadString(string.Format("{0}/planets/{1}/", Settings.RootUrl, id));
             }
-            catch (Exception)
-            {
-                return null;
-            }
+            TextReader textreader = new StringReader(data);
+            JsonReader reader = new JsonTextReader(textreader);
+            return JsonSerializer.Create().Deserialize<Planet>(reader);
         }
     }
 }
