@@ -1,4 +1,7 @@
-﻿using NUnit.Framework;
+﻿using FluentAssertions;
+using NUnit.Framework;
+using System;
+using System.Net;
 
 namespace Threepio.Tests
 {
@@ -14,11 +17,11 @@ namespace Threepio.Tests
         }
 
         [Test]
-        public void Planet_Minus1_Returns_Null()
+        public void Planet_Minus1_Throws_404()
         {
-            Planet planet = Planet.Get(-1);
+            Action act = () => Planet.Get(-1);
 
-            Assert.IsNull(planet);
+            act.ShouldThrow<WebException>();
         }
     }
 }
