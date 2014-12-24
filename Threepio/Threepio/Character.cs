@@ -12,7 +12,7 @@ namespace Threepio
         public string Name { get; set; }
         public Uri Homeworld { get; set; }
         public List<Uri> Films { get; set; }
-        public Uri Species { get; set; }
+        public List<Uri> Species { get; set; }
         public List<Uri> Ships { get; set; }
         public List<Uri> Vehicles { get; set; }
         [JsonProperty("birth_year")]
@@ -20,21 +20,14 @@ namespace Threepio
 
         public static Character Get(int id)
         {
-            try
+            string data;
+            using (WebClient client = WebClientFactory.GetClient())
             {
-                string data;
-                using (WebClient client = WebClientFactory.GetClient())
-                {
-                    data = client.DownloadString(string.Format("{0}/people/{1}/", Settings.RootUrl, id));
-                }
-                TextReader textreader = new StringReader(data);
-                JsonReader reader = new JsonTextReader(textreader);
-                return JsonSerializer.Create().Deserialize<Character>(reader);
+                data = client.DownloadString(string.Format("{0}/people/{1}/", Settings.RootUrl, id));
             }
-            catch (Exception)
-            {
-                return null;
-            }
+            TextReader textreader = new StringReader(data);
+            JsonReader reader = new JsonTextReader(textreader);
+            return JsonSerializer.Create().Deserialize<Character>(reader);
         }
 
         public static List<Character> GetAll(int pageSize = 20, int pageNumber = 1)
