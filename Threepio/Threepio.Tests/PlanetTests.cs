@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Collections.Generic;
+using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Net;
@@ -22,6 +23,14 @@ namespace Threepio.Tests
             Action act = () => Planet.Get(-1);
 
             act.ShouldThrow<WebException>();
+        }
+
+        [Test]
+        public void GetAll_Returns_Multiple_Planets()
+        {
+            var result = Planet.GetAll();
+
+            Assert.IsInstanceOf<List<Planet>>(result);
         }
     }
 }

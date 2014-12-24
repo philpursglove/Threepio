@@ -25,6 +25,7 @@ namespace Threepio.Tests
             act.ShouldThrow<WebException>();
         }
 
+        [Test]
         public void GetAll_Returns_Multiple_Films()
         {
             var result = Film.GetAll();
