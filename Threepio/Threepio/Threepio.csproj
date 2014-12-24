@@ -52,6 +52,7 @@
     <Compile Include="Species.cs" />
     <Compile Include="Starship.cs" />
     <Compile Include="Vehicle.cs" />
+    <Compile Include="WebClientFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
