@@ -23,6 +23,8 @@ namespace Threepio
         public List<Uri> Starships { get; private set; }
         [JsonProperty("vehicles")]
         public List<Uri> Vehicles { get; private set; }
+        [JsonProperty("episode_id")]
+        public int Episode { get; set; }
 
         public static Film Get(int id)
         {
@@ -49,6 +51,37 @@ namespace Threepio
             int endRecord = pageNumber * pageSize;
 
             return new List<Film>();
+        }
+
+        // Convenience methods to find the individual films
+        public static Film Episode1()
+        {
+            return Get(4);
+        }
+
+        public static Film Episode2()
+        {
+            return Get(5);
+        }
+
+        public static Film Episode3()
+        {
+            return Get(6);
+        }
+
+        public static Film Episode4()
+        {
+            return Get(1);
+        }
+
+        public static Film Episode5()
+        {
+            return Get(2);
+        }
+
+        public static Film Episode6()
+        {
+            return Get(3);
         }
     }
 }
