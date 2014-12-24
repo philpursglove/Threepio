@@ -30,9 +30,8 @@ namespace Threepio
             try
             {
                 string data;
-                using (WebClient client = new WebClient())
+                using (WebClient client = WebClientFactory.GetClient())
                 {
-                    client.Headers.Add(HttpRequestHeader.UserAgent, "Threepio .Net library");
                     data = client.DownloadString(string.Format("{0}/vehicles/{1}/", Settings.RootUrl, id));
                 }
                 TextReader textreader = new StringReader(data);

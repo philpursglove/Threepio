@@ -11,7 +11,8 @@ namespace Threepio
         public string Title { get; set; }
         public string Director { get; set; }
         public string Producer { get; set; }
-        public string Opening_Crawl { get; set; }
+        [JsonProperty("Opening_Crawl")]
+        public string Crawl { get; set; }
         [JsonProperty("characters")]
         public List<Uri> Characters { get; private set; }
         [JsonProperty("planets")]
@@ -26,9 +27,8 @@ namespace Threepio
         public static Film Get(int id)
         {
             string data;
-            using (WebClient client = new WebClient())
+            using (WebClient client = WebClientFactory.GetClient())
             {
-                client.Headers.Add(HttpRequestHeader.UserAgent, "Threepio .Net library");
                 data = client.DownloadString(string.Format("{0}/films/{1}/", Settings.RootUrl, id));
             }
             TextReader textreader = new StringReader(data);
@@ -39,9 +39,8 @@ namespace Threepio
         public static List<Film> GetAll(int pageSize = 6, int pageNumber = 1)
         {
             string data;
-            using (WebClient client = new WebClient())
+            using (WebClient client = WebClientFactory.GetClient())
             {
-                client.Headers.Add(HttpRequestHeader.UserAgent, "Threepio .Net library");
                 data = client.DownloadString(string.Format("{0}/films/", Settings.RootUrl));
             }
 

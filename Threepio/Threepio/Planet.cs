@@ -25,9 +25,8 @@ namespace Threepio
         public static Planet Get(int id)
         {
             string data;
-            using (WebClient client = new WebClient())
+            using (WebClient client = WebClientFactory.GetClient())
             {
-                client.Headers.Add(HttpRequestHeader.UserAgent, "Threepio .Net library");
                 data = client.DownloadString(string.Format("{0}/planets/{1}/", Settings.RootUrl, id));
             }
             TextReader textreader = new StringReader(data);
