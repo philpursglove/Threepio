@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 
 namespace Threepio
@@ -42,6 +43,23 @@ namespace Threepio
             {
                 return null;
             }
+        }
+
+        public static List<Starship> GetAll(int pageSize = 20, int pageNumber = 1)
+        {
+            string data;
+            using (WebClient client = WebClientFactory.GetClient())
+            {
+                data = client.DownloadString(string.Format("{0}/starships/", Settings.RootUrl));
+            }
+            StringReader stringreader = new StringReader(data);
+            JsonReader jsonReader = new JsonTextReader(stringreader);
+            List<Starship> starships = JsonSerializer.Create().Deserialize<BulkGet<Starship>>(jsonReader).items;
+
+            // Paging algorthim
+            int startRecord = ((pageNumber - 1) * pageSize) + 1;
+
+            return starships.Skip(startRecord).Take(pageSize).ToList();
         }
     }
 }

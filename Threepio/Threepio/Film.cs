@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 
 namespace Threepio
@@ -45,12 +46,14 @@ namespace Threepio
             {
                 data = client.DownloadString(string.Format("{0}/films/", Settings.RootUrl));
             }
+            StringReader stringreader = new StringReader(data);
+            JsonReader jsonReader = new JsonTextReader(stringreader);
+            List<Film> films = JsonSerializer.Create().Deserialize<BulkGet<Film>>(jsonReader).items;
 
             // Paging algorthim
             int startRecord = ((pageNumber - 1) * pageSize) + 1;
-            int endRecord = pageNumber * pageSize;
 
-            return new List<Film>();
+            return films.Skip(startRecord).Take(pageSize).ToList();
         }
 
         // Convenience methods to find the individual films

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 
 namespace Threepio
@@ -13,11 +14,11 @@ namespace Threepio
         public string Climate { get; set; }
         [JsonProperty("orbital_period")]
         public int OrbitalPeriod { get; set; }
-        public int Population { get; set; }
+        public string Population { get; set; }
         [JsonProperty("rotation_period")]
         public int RotationPeriod { get; set; }
         [JsonProperty("surface_water")]
-        public int SurfaceWaterPercentage { get; set; }
+        public string SurfaceWaterPercentage { get; set; }
         public string Terrain { get; set; }
         public List<Uri> Films { get; set; }
         public List<Uri> Residents { get; set; }
@@ -32,6 +33,23 @@ namespace Threepio
             TextReader textreader = new StringReader(data);
             JsonReader reader = new JsonTextReader(textreader);
             return JsonSerializer.Create().Deserialize<Planet>(reader);
+        }
+
+        public static List<Planet> GetAll(int pageSize = 20, int pageNumber = 1)
+        {
+            string data;
+            using (WebClient client = WebClientFactory.GetClient())
+            {
+                data = client.DownloadString(string.Format("{0}/planets/", Settings.RootUrl));
+            }
+            StringReader stringreader = new StringReader(data);
+            JsonReader jsonReader = new JsonTextReader(stringreader);
+            List<Planet> planets = JsonSerializer.Create().Deserialize<BulkGet<Planet>>(jsonReader).items;
+
+            // Paging algorthim
+            int startRecord = ((pageNumber - 1) * pageSize) + 1;
+
+            return planets.Skip(startRecord).Take(pageSize).ToList();
         }
     }
 }

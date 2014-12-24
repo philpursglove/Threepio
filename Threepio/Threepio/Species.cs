@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 
 namespace Threepio
@@ -34,7 +35,23 @@ namespace Threepio
             {
                 return null;
             }
+        }
 
+        public static List<Species> GetAll(int pageSize = 20, int pageNumber = 1)
+        {
+            string data;
+            using (WebClient client = WebClientFactory.GetClient())
+            {
+                data = client.DownloadString(string.Format("{0}/species/", Settings.RootUrl));
+            }
+            StringReader stringreader = new StringReader(data);
+            JsonReader jsonReader = new JsonTextReader(stringreader);
+            List<Species> species = JsonSerializer.Create().Deserialize<BulkGet<Species>>(jsonReader).items;
+
+            // Paging algorthim
+            int startRecord = ((pageNumber - 1) * pageSize) + 1;
+
+            return species.Skip(startRecord).Take(pageSize).ToList();
         }
     }
 }
