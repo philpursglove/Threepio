@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Threepio.Tests
@@ -24,5 +25,12 @@ namespace Threepio.Tests
             act.ShouldThrow<WebException>();
         }
 
+        [Test]
+        public void GetAll_Returns_Multiple_Species()
+        {
+            var result = Species.GetAll();
+
+            Assert.IsInstanceOf<List<Species>>(result);
+        }
     }
 }
