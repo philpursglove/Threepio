@@ -20,21 +20,14 @@ namespace Threepio
 
         public static Species Get(int id)
         {
-            try
+            string data;
+            using (WebClient client = WebClientFactory.GetClient())
             {
-                string data;
-                using (WebClient client = WebClientFactory.GetClient())
-                {
-                    data = client.DownloadString(string.Format("{0}/species/{1}/", Settings.RootUrl, id));
-                }
-                TextReader textreader = new StringReader(data);
-                JsonReader reader = new JsonTextReader(textreader);
-                return JsonSerializer.Create().Deserialize<Species>(reader);
+                data = client.DownloadString(string.Format("{0}/species/{1}/", Settings.RootUrl, id));
             }
-            catch (Exception)
-            {
-                return null;
-            }
+            TextReader textreader = new StringReader(data);
+            JsonReader reader = new JsonTextReader(textreader);
+            return JsonSerializer.Create().Deserialize<Species>(reader);
         }
 
         public static List<Species> GetAll(int pageSize = 20, int pageNumber = 1)
