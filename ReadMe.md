@@ -11,6 +11,10 @@ Available classes are:
     Vehicle
 
 All classes have two static methods:  
-    Get(int id)   
-    GetPage(int pageNumber = 1)
+    T Get(int id)   
+    List<T> GetPage(int pageNumber = 1)
 
+Film also has a set of convenience methods for returning the individual films:  
+    Film.Episode1  
+    ...  
+    Film.Episode6
