@@ -26,11 +26,20 @@ namespace Threepio.Tests
         }
 
         [Test]
-        public void GetAll_Returns_Multiple_Starships()
+        public void GetPage_Returns_Multiple_Starships()
         {
-            var result = Starship.GetAll();
+            var result = Starship.GetPage();
 
             Assert.IsInstanceOf<List<Starship>>(result);
+        }
+
+        [Test]
+        public void GetPage2_Returns_Different_Results_To_GetPage1()
+        {
+            var result1 = Starship.GetPage(1);
+            var result2 = Starship.GetPage(2);
+
+            Assert.AreNotEqual(result1, result2);
         }
     }
 }

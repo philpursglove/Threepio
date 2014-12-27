@@ -26,11 +26,20 @@ namespace Threepio.Tests
         }
 
         [Test]
-        public void GetAll_Returns_Multiple_Species()
+        public void GetPage_Returns_Multiple_Species()
         {
-            var result = Species.GetAll();
+            var result = Species.GetPage();
 
             Assert.IsInstanceOf<List<Species>>(result);
+        }
+
+        [Test]
+        public void GetPage2_Returns_Different_Results_To_GetPage1()
+        {
+            var result1 = Species.GetPage(1);
+            var result2 = Species.GetPage(2);
+
+            Assert.AreNotEqual(result1, result2);
         }
     }
 }

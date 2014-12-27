@@ -18,11 +18,20 @@ namespace Threepio.Tests
         }
 
         [Test]
-        public void GetAll_Returns_Multiple_Characters()
+        public void GetPage_Returns_Multiple_Characters()
         {
-            var result = Character.GetAll();
+            var result = Character.GetPage();
 
             Assert.IsInstanceOf<List<Character>>(result);
+        }
+
+        [Test]
+        public void GetPage2_Returns_Different_Results_To_GetPage1()
+        {
+            var result1 = Character.GetPage(1);
+            var result2 = Character.GetPage(2);
+
+            Assert.AreNotEqual(result1, result2);
         }
     }
 }

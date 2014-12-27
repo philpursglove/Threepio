@@ -26,9 +26,9 @@ namespace Threepio.Tests
         }
 
         [Test]
-        public void GetAll_Returns_Multiple_Films()
+        public void GetPage_Returns_Multiple_Films()
         {
-            var result = Film.GetAll();
+            var result = Film.GetPage();
 
             Assert.IsInstanceOf<List<Film>>(result);
         }

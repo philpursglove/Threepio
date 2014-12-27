@@ -1,8 +1,8 @@
-﻿using System;
+﻿using FluentAssertions;
+using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Net;
-using FluentAssertions;
-using NUnit.Framework;
 
 namespace Threepio.Tests
 {
@@ -26,11 +26,20 @@ namespace Threepio.Tests
         }
 
         [Test]
-        public void GetAll_Returns_Multiple_Vehicles()
+        public void GetPage_Returns_Multiple_Vehicles()
         {
-            var result = Vehicle.GetAll();
+            var result = Vehicle.GetPage();
 
             Assert.IsInstanceOf<List<Vehicle>>(result);
+        }
+
+        [Test]
+        public void GetPage2_Returns_Different_Results_To_GetPage1()
+        {
+            var result1 = Vehicle.GetPage(1);
+            var result2 = Vehicle.GetPage(2);
+
+            Assert.AreNotEqual(result1, result2);
         }
     }
 }

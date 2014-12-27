@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Threepio.Tests
@@ -26,11 +26,20 @@ namespace Threepio.Tests
         }
 
         [Test]
-        public void GetAll_Returns_Multiple_Planets()
+        public void GetPage_Returns_Multiple_Planets()
         {
-            var result = Planet.GetAll();
+            var result = Planet.GetPage();
 
             Assert.IsInstanceOf<List<Planet>>(result);
+        }
+
+        [Test]
+        public void GetPage2_Returns_Different_Results_To_GetPage1()
+        {
+            var result1 = Planet.GetPage(1);
+            var result2 = Planet.GetPage(2);
+
+            Assert.AreNotEqual(result1, result2);
         }
     }
 }
