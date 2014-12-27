@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 
 namespace Threepio
@@ -16,8 +15,8 @@ namespace Threepio
         [JsonProperty("cost_in_credits")]
         public string Cost { get; set; }
         public float Length { get; set; }
-        public int Crew { get; set; }
-        public int Passengers { get; set; }
+        public string Crew { get; set; }
+        public string Passengers { get; set; }
         [JsonProperty("hyperdrive_rating")]
         public string HyperdriveRating { get; set; }
         [JsonProperty("cargo_capacity")]
@@ -38,21 +37,18 @@ namespace Threepio
             return JsonSerializer.Create().Deserialize<Starship>(reader);
         }
 
-        public static List<Starship> GetAll(int pageSize = 20, int pageNumber = 1)
+        public static List<Starship> GetPage(int pageNumber = 1)
         {
             string data;
             using (WebClient client = WebClientFactory.GetClient())
             {
-                data = client.DownloadString(string.Format("{0}/starships/", Settings.RootUrl));
+                data = client.DownloadString(string.Format("{0}/starships/?page={1}", Settings.RootUrl, pageNumber));
             }
             StringReader stringreader = new StringReader(data);
             JsonReader jsonReader = new JsonTextReader(stringreader);
             List<Starship> starships = JsonSerializer.Create().Deserialize<BulkGet<Starship>>(jsonReader).items;
 
-            // Paging algorthim
-            int startRecord = ((pageNumber - 1) * pageSize) + 1;
-
-            return starships.Skip(startRecord).Take(pageSize).ToList();
+            return starships;
         }
     }
 }

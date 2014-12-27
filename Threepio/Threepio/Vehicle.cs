@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 
 namespace Threepio
@@ -36,21 +35,18 @@ namespace Threepio
             return JsonSerializer.Create().Deserialize<Vehicle>(reader);
         }
 
-        public static List<Vehicle> GetAll(int pageSize = 20, int pageNumber = 1)
+        public static List<Vehicle> GetPage(int pageNumber = 1)
         {
             string data;
             using (WebClient client = WebClientFactory.GetClient())
             {
-                data = client.DownloadString(string.Format("{0}/vehicles/", Settings.RootUrl));
+                data = client.DownloadString(string.Format("{0}/vehicles/?page={1}", Settings.RootUrl, pageNumber));
             }
             StringReader stringreader = new StringReader(data);
             JsonReader jsonReader = new JsonTextReader(stringreader);
             List<Vehicle> vehicles = JsonSerializer.Create().Deserialize<BulkGet<Vehicle>>(jsonReader).items;
 
-            // Paging algorthim
-            int startRecord = ((pageNumber - 1) * pageSize) + 1;
-
-            return vehicles.Skip(startRecord).Take(pageSize).ToList();
+            return vehicles;
         }
     }
 }

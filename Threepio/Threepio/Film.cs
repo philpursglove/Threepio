@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 
 namespace Threepio
@@ -39,21 +38,23 @@ namespace Threepio
             return JsonSerializer.Create().Deserialize<Film>(reader);
         }
 
-        public static List<Film> GetAll(int pageSize = 6, int pageNumber = 1)
+        public static List<Film> GetPage(int pageNumber = 1)
         {
+            Uri nextPageUri = new Uri(string.Format("{0}/films/?page={1}", Settings.RootUrl, pageNumber));
+
+            BulkGet<Film> films = new BulkGet<Film>();
             string data;
+            StringReader stringreader;
+            JsonReader jsonReader;
             using (WebClient client = WebClientFactory.GetClient())
             {
-                data = client.DownloadString(string.Format("{0}/films/", Settings.RootUrl));
+                data = client.DownloadString(nextPageUri);
+
+                stringreader = new StringReader(data);
+                jsonReader = new JsonTextReader(stringreader);
+                films = JsonSerializer.Create().Deserialize<BulkGet<Film>>(jsonReader);
             }
-            StringReader stringreader = new StringReader(data);
-            JsonReader jsonReader = new JsonTextReader(stringreader);
-            List<Film> films = JsonSerializer.Create().Deserialize<BulkGet<Film>>(jsonReader).items;
-
-            // Paging algorthim
-            int startRecord = ((pageNumber - 1) * pageSize) + 1;
-
-            return films.Skip(startRecord).Take(pageSize).ToList();
+            return films.items;
         }
 
         // Convenience methods to find the individual films
