@@ -13,18 +13,35 @@ namespace Threepio
         public string Producer { get; set; }
         [JsonProperty("Opening_Crawl")]
         public string Crawl { get; set; }
+        public List<int> Characters { get; private set; }
         [JsonProperty("characters")]
-        public List<Uri> Characters { get; private set; }
+        internal List<Uri> CharacterUris { get; private set; }
+        public List<int> Planets { get; set; }
         [JsonProperty("planets")]
-        public List<Uri> Planets { get; private set; }
+        internal List<Uri> PlanetUris { get; private set; }
+
+        public List<int> Species { get; set; }
         [JsonProperty("species")]
-        public List<Uri> Species { get; private set; }
+        internal List<Uri> SpeciesUris { get; private set; }
+
+        public List<int> Starships { get; set; }
         [JsonProperty("starships")]
-        public List<Uri> Starships { get; private set; }
+        internal List<Uri> StarshipUris { get; private set; }
+
+        public List<int> Vehicles { get; set; }
         [JsonProperty("vehicles")]
-        public List<Uri> Vehicles { get; private set; }
+        internal List<Uri> VehicleUris { get; private set; }
         [JsonProperty("episode_id")]
         public int Episode { get; set; }
+
+        public Film()
+        {
+            Characters = new List<int>();
+            Planets = new List<int>();
+            Species = new List<int>();
+            Starships = new List<int>();
+            Vehicles = new List<int>();
+        }
 
         public static Film Get(int id)
         {
@@ -35,7 +52,30 @@ namespace Threepio
             }
             TextReader textreader = new StringReader(data);
             JsonReader reader = new JsonTextReader(textreader);
-            return JsonSerializer.Create().Deserialize<Film>(reader);
+            Film film = JsonSerializer.Create().Deserialize<Film>(reader);
+
+            foreach (Uri characterUri in film.CharacterUris)
+            {
+                film.Characters.Add(ParseLink(characterUri));
+            }
+            foreach (Uri planetUri in film.PlanetUris)
+            {
+                film.Planets.Add(ParseLink(planetUri));
+            }
+            foreach (Uri speciesUri in film.SpeciesUris)
+            {
+                film.Species.Add(ParseLink(speciesUri));
+            }
+            foreach (Uri starshipUri in film.StarshipUris)
+            {
+                film.Starships.Add(ParseLink(starshipUri));
+            }
+            foreach (Uri vehicleUri in film.VehicleUris)
+            {
+                film.Vehicles.Add(ParseLink(vehicleUri));
+            }
+
+            return film;
         }
 
         public static List<Film> GetPage(int pageNumber = 1)
