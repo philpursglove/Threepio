@@ -13,9 +13,11 @@ namespace Threepio
         public string Designation { get; set; }
         public string Language { get; set; }
         public Uri Homeworld { get; set; }
-        public List<Uri> Films { get; set; }
+        public List<int> Films { get; set; }
+        public List<int> Members { get; set; }
+        internal List<Uri> FilmUris { get; set; }
         [JsonProperty("people")]
-        public List<Uri> Members { get; set; }
+        internal List<Uri> MemberUris { get; set; }
 
         public static Species Get(int id)
         {

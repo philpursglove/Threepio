@@ -19,8 +19,10 @@ namespace Threepio
         [JsonProperty("surface_water")]
         public string SurfaceWaterPercentage { get; set; }
         public string Terrain { get; set; }
-        public List<Uri> Films { get; set; }
-        public List<Uri> Residents { get; set; }
+        public List<int> Films { get; set; }
+        public List<int> Residents { get; set; }
+        internal List<Uri> FilmUris { get; set; }
+        internal List<Uri> ResidentUris { get; set; }
 
         public static Planet Get(int id)
         {

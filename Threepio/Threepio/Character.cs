@@ -10,10 +10,14 @@ namespace Threepio
     {
         public string Name { get; set; }
         public Uri Homeworld { get; set; }
-        public List<Uri> Films { get; set; }
-        public List<Uri> Species { get; set; }
-        public List<Uri> Ships { get; set; }
-        public List<Uri> Vehicles { get; set; }
+        public List<int> Films { get; set; }
+        public List<int> Species { get; set; }
+        public List<int> Ships { get; set; }
+        public List<int> Vehicles { get; set; }
+        internal List<Uri> FilmUris { get; set; }
+        internal List<Uri> SpeciesUris { get; set; }
+        internal List<Uri> ShipUris { get; set; }
+        internal List<Uri> VehicleUris { get; set; }
         [JsonProperty("birth_year")]
         public string BirthYear { get; set; }
 
