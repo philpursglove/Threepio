@@ -12,13 +12,30 @@ namespace Threepio
         public string Classification { get; set; }
         public string Designation { get; set; }
         public string Language { get; set; }
-        public Uri Homeworld { get; set; }
+        [JsonIgnore]
+        public int Homeworld { get; set; }
+        [JsonProperty("Homeworld")]
+        public Uri HomeworldUri { get; set; }
         public List<int> Films { get; set; }
         public List<int> Members { get; set; }
         [JsonProperty("films")]
         internal List<Uri> FilmUris { get; set; }
         [JsonProperty("people")]
         internal List<Uri> MemberUris { get; set; }
+        [JsonProperty("average_height")]
+        public string AverageHeight { get; set; }
+        [JsonProperty("average_lifespan")]
+        public string AverageLifespan { get; set; }
+        [JsonProperty("eye_colors")]
+        public string EyeColours { get; set; }
+        [JsonProperty("skin_colors")]
+        public string SkinColours { get; set; }
+
+        public Species()
+        {
+            Films = new List<int>();
+            Members = new List<int>();
+        }
 
         public static Species Get(int id)
         {
@@ -29,7 +46,20 @@ namespace Threepio
             }
             TextReader textreader = new StringReader(data);
             JsonReader reader = new JsonTextReader(textreader);
-            return JsonSerializer.Create().Deserialize<Species>(reader);
+            Species species = JsonSerializer.Create().Deserialize<Species>(reader);
+
+            species.Homeworld = ParseLink(species.HomeworldUri);
+
+            foreach (Uri filmUri in species.FilmUris)
+            {
+                species.Films.Add(ParseLink(filmUri));
+            }
+            foreach (Uri memberUri in species.MemberUris)
+            {
+                species.Members.Add(ParseLink(memberUri));
+            }
+
+            return species;
         }
 
         public static List<Species> GetPage(int pageNumber = 1)
