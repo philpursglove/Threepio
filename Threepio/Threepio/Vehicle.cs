@@ -33,7 +33,18 @@ namespace Threepio
             }
             TextReader textreader = new StringReader(data);
             JsonReader reader = new JsonTextReader(textreader);
-            return JsonSerializer.Create().Deserialize<Vehicle>(reader);
+            Vehicle vehicle = JsonSerializer.Create().Deserialize<Vehicle>(reader);
+
+            foreach (Uri filmUri in vehicle.FilmUris)
+            {
+                vehicle.Films.Add(ParseLink(filmUri));
+            }
+            foreach (Uri pilotUri in vehicle.PilotUris)
+            {
+                vehicle.Pilots.Add(ParseLink(pilotUri));
+            }
+
+            return vehicle;
         }
 
         public static List<Vehicle> GetPage(int pageNumber = 1)
