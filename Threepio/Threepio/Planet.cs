@@ -21,7 +21,9 @@ namespace Threepio
         public string Terrain { get; set; }
         public List<int> Films { get; set; }
         public List<int> Residents { get; set; }
+        [JsonProperty("films")]
         internal List<Uri> FilmUris { get; set; }
+        [JsonProperty("residents")]
         internal List<Uri> ResidentUris { get; set; }
 
         public static Planet Get(int id)
