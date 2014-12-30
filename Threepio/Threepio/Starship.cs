@@ -28,6 +28,11 @@ namespace Threepio
         [JsonProperty("pilots")]
         internal List<Uri> PilotUris { get; set; }
 
+        public Starship()
+        {
+            Films = new List<int>();
+            Pilots = new List<int>();
+        }
         public static Starship Get(int id)
         {
             string data;
@@ -37,7 +42,18 @@ namespace Threepio
             }
             TextReader textreader = new StringReader(data);
             JsonReader reader = new JsonTextReader(textreader);
-            return JsonSerializer.Create().Deserialize<Starship>(reader);
+            Starship ship = JsonSerializer.Create().Deserialize<Starship>(reader);
+
+            foreach (Uri filmUri in ship.FilmUris)
+            {
+                ship.Films.Add(ParseLink(filmUri));
+            }
+            foreach (Uri pilotUri in ship.PilotUris)
+            {
+                ship.Pilots.Add(ParseLink(pilotUri));
+            }
+
+            return ship;
         }
 
         public static List<Starship> GetPage(int pageNumber = 1)

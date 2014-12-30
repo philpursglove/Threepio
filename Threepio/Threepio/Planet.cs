@@ -26,6 +26,12 @@ namespace Threepio
         [JsonProperty("residents")]
         internal List<Uri> ResidentUris { get; set; }
 
+        public Planet()
+        {
+            Films = new List<int>();
+            Residents = new List<int>();
+        }
+
         public static Planet Get(int id)
         {
             string data;
@@ -35,7 +41,17 @@ namespace Threepio
             }
             TextReader textreader = new StringReader(data);
             JsonReader reader = new JsonTextReader(textreader);
-            return JsonSerializer.Create().Deserialize<Planet>(reader);
+            Planet planet = JsonSerializer.Create().Deserialize<Planet>(reader);
+
+            foreach (Uri filmUri in planet.FilmUris)
+            {
+                planet.Films.Add(ParseLink(filmUri));
+            }
+            foreach (Uri residentUri in planet.ResidentUris)
+            {
+                planet.Residents.Add(ParseLink(residentUri));
+            }
+            return planet;
         }
 
         public static List<Planet> GetPage(int pageNumber = 1)
