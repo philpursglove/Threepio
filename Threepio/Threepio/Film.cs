@@ -14,23 +14,13 @@ namespace Threepio
         [JsonProperty("Opening_Crawl")]
         public string Crawl { get; set; }
         public List<int> Characters { get; private set; }
-        [JsonProperty("characters")]
-        internal List<Uri> CharacterUris { get; private set; }
         public List<int> Planets { get; set; }
-        [JsonProperty("planets")]
-        internal List<Uri> PlanetUris { get; private set; }
 
         public List<int> Species { get; set; }
-        [JsonProperty("species")]
-        internal List<Uri> SpeciesUris { get; private set; }
 
         public List<int> Starships { get; set; }
-        [JsonProperty("starships")]
-        internal List<Uri> StarshipUris { get; private set; }
 
         public List<int> Vehicles { get; set; }
-        [JsonProperty("vehicles")]
-        internal List<Uri> VehicleUris { get; private set; }
         [JsonProperty("episode_id")]
         public int Episode { get; set; }
 

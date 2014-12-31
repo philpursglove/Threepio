@@ -21,10 +21,6 @@ namespace Threepio
         public string CargoCapacity { get; set; }
         public List<int> Films { get; set; }
         public List<int> Pilots { get; set; }
-        [JsonProperty("films")]
-        internal List<Uri> FilmUris { get; set; }
-        [JsonProperty("pilots")]
-        internal List<Uri> PilotUris { get; set; }
 
         public Vehicle()
         {

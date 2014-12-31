@@ -14,14 +14,6 @@ namespace Threepio
         public List<int> Species { get; set; }
         public List<int> Ships { get; set; }
         public List<int> Vehicles { get; set; }
-        [JsonProperty("films")]
-        internal List<Uri> FilmUris { get; set; }
-        [JsonProperty("species")]
-        internal List<Uri> SpeciesUris { get; set; }
-        [JsonProperty("starships")]
-        internal List<Uri> ShipUris { get; set; }
-        [JsonProperty("vehicles")]
-        internal List<Uri> VehicleUris { get; set; }
         [JsonProperty("birth_year")]
         public string BirthYear { get; set; }
 
@@ -44,7 +36,7 @@ namespace Threepio
             {
                 character.Species.Add(ParseLink(speciesUri));
             }
-            foreach (Uri shipUri in character.ShipUris)
+            foreach (Uri shipUri in character.StarshipUris)
             {
                 character.Ships.Add(ParseLink(shipUri));
             }

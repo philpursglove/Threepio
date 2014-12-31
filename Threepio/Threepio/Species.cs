@@ -18,10 +18,6 @@ namespace Threepio
         public Uri HomeworldUri { get; set; }
         public List<int> Films { get; set; }
         public List<int> Members { get; set; }
-        [JsonProperty("films")]
-        internal List<Uri> FilmUris { get; set; }
-        [JsonProperty("people")]
-        internal List<Uri> MemberUris { get; set; }
         [JsonProperty("average_height")]
         public string AverageHeight { get; set; }
         [JsonProperty("average_lifespan")]
