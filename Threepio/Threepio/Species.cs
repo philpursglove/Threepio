@@ -44,15 +44,15 @@ namespace Threepio
             JsonReader reader = new JsonTextReader(textreader);
             Species species = JsonSerializer.Create().Deserialize<Species>(reader);
 
-            species.Homeworld = ParseLink(species.HomeworldUri);
+            species.Homeworld = extractId(species.HomeworldUri);
 
             foreach (Uri filmUri in species.FilmUris)
             {
-                species.Films.Add(ParseLink(filmUri));
+                species.Films.Add(extractId(filmUri));
             }
             foreach (Uri memberUri in species.MemberUris)
             {
-                species.Members.Add(ParseLink(memberUri));
+                species.Members.Add(extractId(memberUri));
             }
 
             return species;

@@ -41,11 +41,11 @@ namespace Threepio
 
             foreach (Uri filmUri in vehicle.FilmUris)
             {
-                vehicle.Films.Add(ParseLink(filmUri));
+                vehicle.Films.Add(extractId(filmUri));
             }
             foreach (Uri pilotUri in vehicle.PilotUris)
             {
-                vehicle.Pilots.Add(ParseLink(pilotUri));
+                vehicle.Pilots.Add(extractId(pilotUri));
             }
 
             return vehicle;

@@ -29,7 +29,7 @@ namespace Threepio
         internal List<Uri> PilotUris { get; set; }
 
 
-        internal static int ParseLink(Uri uri)
+        internal static int extractId(Uri uri)
         {
             string link = uri.AbsoluteUri;
 

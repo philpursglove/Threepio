@@ -46,23 +46,23 @@ namespace Threepio
 
             foreach (Uri characterUri in film.CharacterUris)
             {
-                film.Characters.Add(ParseLink(characterUri));
+                film.Characters.Add(extractId(characterUri));
             }
             foreach (Uri planetUri in film.PlanetUris)
             {
-                film.Planets.Add(ParseLink(planetUri));
+                film.Planets.Add(extractId(planetUri));
             }
             foreach (Uri speciesUri in film.SpeciesUris)
             {
-                film.Species.Add(ParseLink(speciesUri));
+                film.Species.Add(extractId(speciesUri));
             }
             foreach (Uri starshipUri in film.StarshipUris)
             {
-                film.Starships.Add(ParseLink(starshipUri));
+                film.Starships.Add(extractId(starshipUri));
             }
             foreach (Uri vehicleUri in film.VehicleUris)
             {
-                film.Vehicles.Add(ParseLink(vehicleUri));
+                film.Vehicles.Add(extractId(vehicleUri));
             }
 
             return film;

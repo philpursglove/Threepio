@@ -41,11 +41,11 @@ namespace Threepio
 
             foreach (Uri filmUri in planet.FilmUris)
             {
-                planet.Films.Add(ParseLink(filmUri));
+                planet.Films.Add(extractId(filmUri));
             }
             foreach (Uri residentUri in planet.ResidentUris)
             {
-                planet.Residents.Add(ParseLink(residentUri));
+                planet.Residents.Add(extractId(residentUri));
             }
             return planet;
         }
