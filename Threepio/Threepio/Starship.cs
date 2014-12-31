@@ -41,16 +41,21 @@ namespace Threepio
             JsonReader reader = new JsonTextReader(textreader);
             Starship ship = JsonSerializer.Create().Deserialize<Starship>(reader);
 
-            foreach (Uri filmUri in ship.FilmUris)
-            {
-                ship.Films.Add(extractId(filmUri));
-            }
-            foreach (Uri pilotUri in ship.PilotUris)
-            {
-                ship.Pilots.Add(extractId(pilotUri));
-            }
+            ship.extractIds();
 
             return ship;
+        }
+
+        private void extractIds()
+        {
+            foreach (Uri filmUri in FilmUris)
+            {
+                Films.Add(extractId(filmUri));
+            }
+            foreach (Uri pilotUri in PilotUris)
+            {
+                Pilots.Add(extractId(pilotUri));
+            }
         }
 
         public static List<Starship> GetPage(int pageNumber = 1)
@@ -64,6 +69,10 @@ namespace Threepio
             JsonReader jsonReader = new JsonTextReader(stringreader);
             List<Starship> starships = JsonSerializer.Create().Deserialize<BulkGet<Starship>>(jsonReader).items;
 
+            foreach (Starship starship in starships)
+            {
+                starship.extractIds();
+            }
             return starships;
         }
     }

@@ -40,16 +40,21 @@ namespace Threepio
             JsonReader reader = new JsonTextReader(textreader);
             Vehicle vehicle = JsonSerializer.Create().Deserialize<Vehicle>(reader);
 
-            foreach (Uri filmUri in vehicle.FilmUris)
-            {
-                vehicle.Films.Add(extractId(filmUri));
-            }
-            foreach (Uri pilotUri in vehicle.PilotUris)
-            {
-                vehicle.Pilots.Add(extractId(pilotUri));
-            }
+            vehicle.extractIds();
 
             return vehicle;
+        }
+
+        private void extractIds()
+        {
+            foreach (Uri filmUri in FilmUris)
+            {
+                Films.Add(extractId(filmUri));
+            }
+            foreach (Uri pilotUri in PilotUris)
+            {
+                Pilots.Add(extractId(pilotUri));
+            }
         }
 
         public static List<Vehicle> GetPage(int pageNumber = 1)
@@ -63,6 +68,10 @@ namespace Threepio
             JsonReader jsonReader = new JsonTextReader(stringreader);
             List<Vehicle> vehicles = JsonSerializer.Create().Deserialize<BulkGet<Vehicle>>(jsonReader).items;
 
+            foreach (Vehicle vehicle in vehicles)
+            {
+                vehicle.extractIds();
+            }
             return vehicles;
         }
     }

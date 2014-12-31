@@ -46,16 +46,21 @@ namespace Threepio
 
             species.Homeworld = extractId(species.HomeworldUri);
 
-            foreach (Uri filmUri in species.FilmUris)
-            {
-                species.Films.Add(extractId(filmUri));
-            }
-            foreach (Uri memberUri in species.MemberUris)
-            {
-                species.Members.Add(extractId(memberUri));
-            }
+            species.extractIds();
 
             return species;
+        }
+
+        private void extractIds()
+        {
+            foreach (Uri filmUri in FilmUris)
+            {
+                Films.Add(extractId(filmUri));
+            }
+            foreach (Uri memberUri in MemberUris)
+            {
+                Members.Add(extractId(memberUri));
+            }
         }
 
         public static List<Species> GetPage(int pageNumber = 1)
@@ -69,6 +74,10 @@ namespace Threepio
             JsonReader jsonReader = new JsonTextReader(stringreader);
             List<Species> species = JsonSerializer.Create().Deserialize<BulkGet<Species>>(jsonReader).items;
 
+            foreach (Species specie in species)
+            {
+                specie.extractIds();
+            }
             return species;
         }
     }

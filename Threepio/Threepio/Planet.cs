@@ -39,15 +39,20 @@ namespace Threepio
             JsonReader reader = new JsonTextReader(textreader);
             Planet planet = JsonSerializer.Create().Deserialize<Planet>(reader);
 
-            foreach (Uri filmUri in planet.FilmUris)
-            {
-                planet.Films.Add(extractId(filmUri));
-            }
-            foreach (Uri residentUri in planet.ResidentUris)
-            {
-                planet.Residents.Add(extractId(residentUri));
-            }
+            planet.extractIds();
             return planet;
+        }
+
+        private void extractIds()
+        {
+            foreach (Uri filmUri in FilmUris)
+            {
+                Films.Add(extractId(filmUri));
+            }
+            foreach (Uri residentUri in ResidentUris)
+            {
+                Residents.Add(extractId(residentUri));
+            }
         }
 
         public static List<Planet> GetPage(int pageNumber = 1)
@@ -61,6 +66,10 @@ namespace Threepio
             JsonReader jsonReader = new JsonTextReader(stringreader);
             List<Planet> planets = JsonSerializer.Create().Deserialize<BulkGet<Planet>>(jsonReader).items;
 
+            foreach (Planet planet in planets)
+            {
+                planet.extractIds();
+            }
             return planets;
         }
     }
