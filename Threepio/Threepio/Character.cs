@@ -17,6 +17,13 @@ namespace Threepio
         [JsonProperty("birth_year")]
         public string BirthYear { get; set; }
 
+        public Character()
+        {
+            Films = new List<int>();
+            Species = new List<int>();
+            Ships = new List<int>();
+            Vehicles = new List<int>();
+        }
         public static Character Get(int id)
         {
             string data;

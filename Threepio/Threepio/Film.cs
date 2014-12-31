@@ -44,28 +44,33 @@ namespace Threepio
             JsonReader reader = new JsonTextReader(textreader);
             Film film = JsonSerializer.Create().Deserialize<Film>(reader);
 
-            foreach (Uri characterUri in film.CharacterUris)
-            {
-                film.Characters.Add(extractId(characterUri));
-            }
-            foreach (Uri planetUri in film.PlanetUris)
-            {
-                film.Planets.Add(extractId(planetUri));
-            }
-            foreach (Uri speciesUri in film.SpeciesUris)
-            {
-                film.Species.Add(extractId(speciesUri));
-            }
-            foreach (Uri starshipUri in film.StarshipUris)
-            {
-                film.Starships.Add(extractId(starshipUri));
-            }
-            foreach (Uri vehicleUri in film.VehicleUris)
-            {
-                film.Vehicles.Add(extractId(vehicleUri));
-            }
+            film.ExtractIds();
 
             return film;
+        }
+
+        private void ExtractIds()
+        {
+            foreach (Uri characterUri in CharacterUris)
+            {
+                Characters.Add(extractId(characterUri));
+            }
+            foreach (Uri planetUri in PlanetUris)
+            {
+                Planets.Add(extractId(planetUri));
+            }
+            foreach (Uri speciesUri in SpeciesUris)
+            {
+                Species.Add(extractId(speciesUri));
+            }
+            foreach (Uri starshipUri in StarshipUris)
+            {
+                Starships.Add(extractId(starshipUri));
+            }
+            foreach (Uri vehicleUri in VehicleUris)
+            {
+                Vehicles.Add(extractId(vehicleUri));
+            }
         }
 
         public static List<Film> GetPage(int pageNumber = 1)
@@ -84,6 +89,11 @@ namespace Threepio
                 jsonReader = new JsonTextReader(stringreader);
                 films = JsonSerializer.Create().Deserialize<BulkGet<Film>>(jsonReader);
             }
+            foreach (Film film in films.items)
+            {
+                film.ExtractIds();
+            }
+
             return films.items;
         }
 
