@@ -16,7 +16,8 @@ namespace Threepio
         public string Cost { get; set; }
         public string Length { get; set; }
         public int Crew { get; set; }
-        public string Passengers { get; set; }
+        [JsonProperty("passengers")]
+        public string PassengerCapacity { get; set; }
         [JsonProperty("cargo_capacity")]
         public string CargoCapacity { get; set; }
         public List<int> Films { get; set; }
