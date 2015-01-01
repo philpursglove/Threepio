@@ -22,6 +22,7 @@ namespace Threepio
         public string CargoCapacity { get; set; }
         public List<int> Films { get; set; }
         public List<int> Pilots { get; set; }
+        public string Manufacturer { get; set; }
 
         public Vehicle()
         {
