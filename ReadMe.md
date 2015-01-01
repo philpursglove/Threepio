@@ -22,3 +22,5 @@ Film also has a set of convenience methods for returning the individual films:
     ...  
     Film.Episode6
 ```
+
+Where classes are related, they hold a list of integer Ids e.g. Starship.Pilots is a list of Ids of Character. Occasionally the link is singular, as in Character.Homeworld which relates to a Planet.
