@@ -1,8 +1,5 @@
-﻿using FluentAssertions;
-using NUnit.Framework;
-using System;
+﻿using NUnit.Framework;
 using System.Collections.Generic;
-using System.Net;
 
 namespace Threepio.Tests
 {
@@ -17,13 +14,6 @@ namespace Threepio.Tests
             Assert.IsNotNull(aNewHope);
         }
 
-        [Test]
-        public void Film_Minus1_Throws_404()
-        {
-            Action act = () => Film.Get(-1);
-
-            act.ShouldThrow<WebException>();
-        }
 
         [Test]
         public async void GetPage_Returns_Multiple_Films()

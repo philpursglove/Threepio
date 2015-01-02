@@ -17,14 +17,7 @@ namespace Threepio.Tests
             Assert.IsNotNull(species);
         }
 
-        [Test]
-        public void Species_Minus1_Throws_A_404()
-        {
-            Action act = () => Species.Get(-1);
-
-            act.ShouldThrow<WebException>();
-        }
-
+        
         [Test]
         public async void GetPage_Returns_Multiple_Species()
         {

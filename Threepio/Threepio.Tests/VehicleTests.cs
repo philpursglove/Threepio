@@ -17,14 +17,7 @@ namespace Threepio.Tests
             Assert.IsNotNull(vehicle);
         }
 
-        [Test]
-        public void Vehicle_Minus1_Throws_A_404()
-        {
-            Action act = () => Vehicle.Get(-1);
-
-            act.ShouldThrow<WebException>();
-        }
-
+       
         [Test]
         public async void GetPage_Returns_Multiple_Vehicles()
         {

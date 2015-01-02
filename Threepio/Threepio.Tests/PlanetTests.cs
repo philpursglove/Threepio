@@ -17,14 +17,7 @@ namespace Threepio.Tests
             Assert.IsNotNull(planet);
         }
 
-        [Test]
-        public void Planet_Minus1_Throws_404()
-        {
-            Action act = () => Planet.Get(-1);
-
-            act.ShouldThrow<WebException>();
-        }
-
+       
         [Test]
         public async void GetPage_Returns_Multiple_Planets()
         {

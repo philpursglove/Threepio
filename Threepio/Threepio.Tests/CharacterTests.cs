@@ -1,21 +1,11 @@
-﻿using FluentAssertions;
-using NUnit.Framework;
-using System;
+﻿using NUnit.Framework;
 using System.Collections.Generic;
-using System.Net;
 
 namespace Threepio.Tests
 {
     [TestFixture]
     public class CharacterTests
     {
-        [Test]
-        public void Get_Minus1_Throws_404()
-        {
-            Action act = () => Character.Get(-1);
-
-            act.ShouldThrow<WebException>();
-        }
 
         [Test]
         public async void GetPage_Returns_Multiple_Characters()

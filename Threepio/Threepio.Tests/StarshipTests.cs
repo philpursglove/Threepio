@@ -17,14 +17,7 @@ namespace Threepio.Tests
             Assert.IsNotNull(ship);
         }
 
-        [Test]
-        public void Starship_Minus1_Throws_A_404()
-        {
-            Action act = () => Starship.Get(-1);
-
-            act.ShouldThrow<WebException>();
-        }
-
+        
         [Test]
         public async void GetPage_Returns_Multiple_Starships()
         {
