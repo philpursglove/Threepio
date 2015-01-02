@@ -1,15 +1,16 @@
 ﻿using System.Net;
+using System.Net.Http;
 
 namespace Threepio
 {
     public static class WebClientFactory
     {
-        public static WebClient GetClient()
+        public static HttpClient GetClient()
         {
-            WebClient client = new WebClient();
+            HttpClient client = new HttpClient(new HttpClientHandler{AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip});
 
             // Have to specify a User-Agent or the server returns http 500
-            client.Headers.Add(HttpRequestHeader.UserAgent, "Threepio .Net library");
+            client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "Threepio .Net library");
 
             return client;
         }

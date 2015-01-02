@@ -1,8 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net;
 
 namespace Threepio
 {
@@ -33,12 +34,12 @@ namespace Threepio
             Vehicles = new List<int>();
         }
 
-        public static Film Get(int id)
+        public static async Task<Film> Get(int id)
         {
             string data;
-            using (WebClient client = WebClientFactory.GetClient())
+            using (HttpClient client = WebClientFactory.GetClient())
             {
-                data = client.DownloadString(string.Format("{0}/films/{1}/", Settings.RootUrl, id));
+                data = await client.GetStringAsync(string.Format("{0}/films/{1}/", Settings.RootUrl, id));
             }
             TextReader textreader = new StringReader(data);
             JsonReader reader = new JsonTextReader(textreader);
@@ -73,7 +74,7 @@ namespace Threepio
             }
         }
 
-        public static List<Film> GetPage(int pageNumber = 1)
+        public static async Task<List<Film>> GetPage(int pageNumber = 1)
         {
             Uri nextPageUri = new Uri(string.Format("{0}/films/?page={1}", Settings.RootUrl, pageNumber));
 
@@ -81,9 +82,9 @@ namespace Threepio
             string data;
             StringReader stringreader;
             JsonReader jsonReader;
-            using (WebClient client = WebClientFactory.GetClient())
+            using (HttpClient client = WebClientFactory.GetClient())
             {
-                data = client.DownloadString(nextPageUri);
+                data = await client.GetStringAsync(nextPageUri);
 
                 stringreader = new StringReader(data);
                 jsonReader = new JsonTextReader(stringreader);
@@ -98,32 +99,32 @@ namespace Threepio
         }
 
         // Convenience methods to find the individual films
-        public static Film Episode1()
+        public static Task<Film> Episode1()
         {
             return Get(4);
         }
 
-        public static Film Episode2()
+        public static Task<Film> Episode2()
         {
             return Get(5);
         }
 
-        public static Film Episode3()
+        public static Task<Film> Episode3()
         {
             return Get(6);
         }
 
-        public static Film Episode4()
+        public static Task<Film> Episode4()
         {
             return Get(1);
         }
 
-        public static Film Episode5()
+        public static Task<Film> Episode5()
         {
             return Get(2);
         }
 
-        public static Film Episode6()
+        public static Task<Film> Episode6()
         {
             return Get(3);
         }

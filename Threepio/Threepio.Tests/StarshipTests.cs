@@ -10,34 +10,27 @@ namespace Threepio.Tests
     class StarshipTests
     {
         [Test]
-        public void Starship_10_Returns_A_Starship()
+        public async void Starship_10_Returns_A_Starship()
         {
-            Starship ship = Starship.Get(10);
+            Starship ship = await Starship.Get(10);
 
             Assert.IsNotNull(ship);
         }
 
+        
         [Test]
-        public void Starship_Minus1_Throws_A_404()
+        public async void GetPage_Returns_Multiple_Starships()
         {
-            Action act = () => Starship.Get(-1);
-
-            act.ShouldThrow<WebException>();
-        }
-
-        [Test]
-        public void GetPage_Returns_Multiple_Starships()
-        {
-            var result = Starship.GetPage();
+            var result = await Starship.GetPage();
 
             Assert.IsInstanceOf<List<Starship>>(result);
         }
 
         [Test]
-        public void GetPage2_Returns_Different_Results_To_GetPage1()
+        public async void GetPage2_Returns_Different_Results_To_GetPage1()
         {
-            var result1 = Starship.GetPage(1);
-            var result2 = Starship.GetPage(2);
+            var result1 = await Starship.GetPage(1);
+            var result2 = await Starship.GetPage(2);
 
             Assert.AreNotEqual(result1, result2);
         }

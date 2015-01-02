@@ -10,34 +10,27 @@ namespace Threepio.Tests
     class VehicleTests
     {
         [Test]
-        public void Vehicle_18_Returns_A_Vehicle()
+        public async void Vehicle_18_Returns_A_Vehicle()
         {
-            Vehicle vehicle = Vehicle.Get(18);
+            Vehicle vehicle = await Vehicle.Get(18);
 
             Assert.IsNotNull(vehicle);
         }
 
+       
         [Test]
-        public void Vehicle_Minus1_Throws_A_404()
+        public async void GetPage_Returns_Multiple_Vehicles()
         {
-            Action act = () => Vehicle.Get(-1);
-
-            act.ShouldThrow<WebException>();
-        }
-
-        [Test]
-        public void GetPage_Returns_Multiple_Vehicles()
-        {
-            var result = Vehicle.GetPage();
+            var result = await Vehicle.GetPage();
 
             Assert.IsInstanceOf<List<Vehicle>>(result);
         }
 
         [Test]
-        public void GetPage2_Returns_Different_Results_To_GetPage1()
+        public async void GetPage2_Returns_Different_Results_To_GetPage1()
         {
-            var result1 = Vehicle.GetPage(1);
-            var result2 = Vehicle.GetPage(2);
+            var result1 = await Vehicle.GetPage(1);
+            var result2 = await Vehicle.GetPage(2);
 
             Assert.AreNotEqual(result1, result2);
         }
