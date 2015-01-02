@@ -18,18 +18,18 @@ namespace Threepio.Tests
         }
 
         [Test]
-        public void GetPage_Returns_Multiple_Characters()
+        public async void GetPage_Returns_Multiple_Characters()
         {
-            var result = Character.GetPage();
+            var result = await Character.GetPage();
 
             Assert.IsInstanceOf<List<Character>>(result);
         }
 
         [Test]
-        public void GetPage2_Returns_Different_Results_To_GetPage1()
+        public async void GetPage2_Returns_Different_Results_To_GetPage1()
         {
-            var result1 = Character.GetPage(1);
-            var result2 = Character.GetPage(2);
+            var result1 = await Character.GetPage(1);
+            var result2 = await Character.GetPage(2);
 
             Assert.AreNotEqual(result1, result2);
         }

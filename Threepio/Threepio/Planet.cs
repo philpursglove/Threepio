@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,12 +30,12 @@ namespace Threepio
             Residents = new List<int>();
         }
 
-        public static Planet Get(int id)
+        public static async Task<Planet> Get(int id)
         {
             string data;
-            using (WebClient client = WebClientFactory.GetClient())
+            using (HttpClient client = WebClientFactory.GetClient())
             {
-                data = client.DownloadString(string.Format("{0}/planets/{1}/", Settings.RootUrl, id));
+                data = await client.GetStringAsync(string.Format("{0}/planets/{1}/", Settings.RootUrl, id));
             }
             TextReader textreader = new StringReader(data);
             JsonReader reader = new JsonTextReader(textreader);
@@ -55,12 +57,12 @@ namespace Threepio
             }
         }
 
-        public static List<Planet> GetPage(int pageNumber = 1)
+        public static async Task<List<Planet>> GetPage(int pageNumber = 1)
         {
             string data;
-            using (WebClient client = WebClientFactory.GetClient())
+            using (HttpClient client = WebClientFactory.GetClient())
             {
-                data = client.DownloadString(string.Format("{0}/planets/?page={1}", Settings.RootUrl, pageNumber));
+                data = await client.GetStringAsync(string.Format("{0}/planets/?page={1}", Settings.RootUrl, pageNumber));
             }
             StringReader stringreader = new StringReader(data);
             JsonReader jsonReader = new JsonTextReader(stringreader);

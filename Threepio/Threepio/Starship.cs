@@ -1,8 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net;
 
 namespace Threepio
 {
@@ -32,12 +33,12 @@ namespace Threepio
             Films = new List<int>();
             Pilots = new List<int>();
         }
-        public static Starship Get(int id)
+        public static async Task<Starship> Get(int id)
         {
             string data;
-            using (WebClient client = WebClientFactory.GetClient())
+            using (HttpClient client = WebClientFactory.GetClient())
             {
-                data = client.DownloadString(string.Format("{0}/starships/{1}/", Settings.RootUrl, id));
+                data = await client.GetStringAsync(string.Format("{0}/starships/{1}/", Settings.RootUrl, id));
             }
             TextReader textreader = new StringReader(data);
             JsonReader reader = new JsonTextReader(textreader);
@@ -60,12 +61,12 @@ namespace Threepio
             }
         }
 
-        public static List<Starship> GetPage(int pageNumber = 1)
+        public static async Task<List<Starship>> GetPage(int pageNumber = 1)
         {
             string data;
-            using (WebClient client = WebClientFactory.GetClient())
+            using (HttpClient client = WebClientFactory.GetClient())
             {
-                data = client.DownloadString(string.Format("{0}/starships/?page={1}", Settings.RootUrl, pageNumber));
+                data = await client.GetStringAsync(string.Format("{0}/starships/?page={1}", Settings.RootUrl, pageNumber));
             }
             StringReader stringreader = new StringReader(data);
             JsonReader jsonReader = new JsonTextReader(stringreader);
