@@ -72,7 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Threepio\Threepio.csproj">
-      <Project>{24b28563-6959-4b79-b6b4-657413699b4e}</Project>
+      <Project>{76b3b129-818e-4254-b2da-a610233b1767}</Project>
       <Name>Threepio</Name>
     </ProjectReference>
   </ItemGroup>

@@ -10,9 +10,9 @@ namespace Threepio.Tests
     public class PlanetTests
     {
         [Test]
-        public void Planet_1_Returns_Planet()
+        public async void Planet_1_Returns_Planet()
         {
-            Planet planet = Planet.Get(1);
+            Planet planet = await Planet.Get(1);
 
             Assert.IsNotNull(planet);
         }
@@ -26,18 +26,18 @@ namespace Threepio.Tests
         }
 
         [Test]
-        public void GetPage_Returns_Multiple_Planets()
+        public async void GetPage_Returns_Multiple_Planets()
         {
-            var result = Planet.GetPage();
+            var result = await Planet.GetPage();
 
             Assert.IsInstanceOf<List<Planet>>(result);
         }
 
         [Test]
-        public void GetPage2_Returns_Different_Results_To_GetPage1()
+        public async void GetPage2_Returns_Different_Results_To_GetPage1()
         {
-            var result1 = Planet.GetPage(1);
-            var result2 = Planet.GetPage(2);
+            var result1 = await Planet.GetPage(1);
+            var result2 = await Planet.GetPage(2);
 
             Assert.AreNotEqual(result1, result2);
         }

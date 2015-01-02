@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -38,12 +40,13 @@ namespace Threepio
             Ships = new List<int>();
             Vehicles = new List<int>();
         }
-        public static Character Get(int id)
+
+        public static async Task<Character> Get(int id)
         {
             string data;
-            using (WebClient client = WebClientFactory.GetClient())
+            using (HttpClient client = WebClientFactory.GetClient())
             {
-                data = client.DownloadString(string.Format("{0}/people/{1}/", Settings.RootUrl, id));
+                data = await client.GetStringAsync(string.Format("{0}/people/{1}/", Settings.RootUrl, id));
             }
             TextReader textreader = new StringReader(data);
             JsonReader reader = new JsonTextReader(textreader);
@@ -75,7 +78,7 @@ namespace Threepio
             Homeworld = extractId(HomeworldUri);
         }
 
-        public static List<Character> GetPage(int pageNumber = 1)
+        public static async Task<List<Character>> GetPage(int pageNumber = 1)
         {
             string data;
             StringReader stringreader;
@@ -84,9 +87,9 @@ namespace Threepio
 
             Uri nextPageUri = new Uri(string.Format("{0}/people/?page={1}", Settings.RootUrl, pageNumber));
 
-            using (WebClient client = WebClientFactory.GetClient())
+            using (HttpClient client = WebClientFactory.GetClient())
             {
-                data = client.DownloadString(nextPageUri);
+                data = await client.GetStringAsync(nextPageUri);
 
                 stringreader = new StringReader(data);
                 jsonReader = new JsonTextReader(stringreader);
