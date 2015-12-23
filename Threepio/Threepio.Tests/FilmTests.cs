@@ -64,5 +64,12 @@ namespace Threepio.Tests
             Film ep6 = await Film.Episode6();
             Assert.IsTrue(ep6.Title == "Return of the Jedi");
         }
+
+        [Test]
+        public async void Episode7_Returns_TheForceAwakens()
+        {
+            Film ep7 = await Film.Episode7();
+            Assert.AreEqual("The Force Awakens", ep7.Title);
+        }
     }
 }

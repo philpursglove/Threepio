@@ -128,5 +128,10 @@ namespace Threepio
         {
             return Get(3);
         }
+
+        public static Task<Film> Episode7()
+        {
+            return Get(7);
+        }
     }
 }
